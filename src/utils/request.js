@@ -29,16 +29,19 @@ const errorHandler = (error) => {
         description: data.message
       })
       if (token) {
-        store.dispatch('Logout').then(() => {
-          setTimeout(() => {
-            window.location.reload()
-          }, 1500)
-        })
+        store.commit('SET_TOKEN', '')
+        store.commit('SET_ROLES', [])
+        storage.remove(ACCESS_TOKEN)
       }
+    } else if (error.response.status === 404) {
+      notification.error({
+        message: 'Not Found',
+        description: '请求服务器资源不存在'
+      })
     } else {
       notification.error({
-        message: 'error',
-        description: data.message
+        message: 'Error',
+        description: data.message ? data.message : '网络请求异常'
       })
     }
   }

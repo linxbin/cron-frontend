@@ -4,11 +4,12 @@ const api = {
   list: '/task/list',
   detail: '/task/detail',
   enable: '/task/enable',
-  disable: 'task/disable',
-  add: 'task/create',
-  edit: 'task/update',
-  delete: 'task/delete',
-  logList: 'task-log/list'
+  disable: '/task/disable',
+  add: '/task/create',
+  edit: '/task/update',
+  delete: '/task/delete',
+  logList: '/task-log/list',
+  clearLogList: '/task-log/clear'
 }
 
 export function getTaskList (parameter) {
@@ -71,5 +72,13 @@ export function taskLogList (id, parameter) {
     url: api.logList + '/' + id,
     method: 'get',
     params: parameter
+  })
+}
+
+export function clearLogList (id) {
+  return request({
+    url: api.clearLogList,
+    method: 'post',
+    params: { task_id: id }
   })
 }

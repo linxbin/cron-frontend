@@ -1,6 +1,10 @@
 <template>
   <page-header-wrapper :title="false">
     <a-card :body-style="{padding: '10px 10px'}" :bordered="false">
+      <div class="table-operator">
+        <a-button type="primary" icon="reload" @click="reload()">刷新</a-button>
+        <a-button type="danger" icon="delete" @click="clearLogs()">清空日志</a-button>
+      </div>
       <a-table
         :columns="columns"
         :data-source="items"
@@ -55,7 +59,7 @@
 
 <script>
 import moment from 'moment'
-import { taskLogList } from '@/api/task'
+import { clearLogList, taskLogList } from '@/api/task'
 
 export default {
   name: 'TaskLogList',
@@ -142,10 +146,12 @@ export default {
     taskLogList () {
       this.loading = true
       taskLogList(this.taskId, this.queryParam).then(res => {
+        this.loading = false
         this.items = res.result.items
         this.pagination.current = res.result.pager.page
         this.pagination.total = res.result.pager.total_rows
         this.pagination.pageSize = res.result.pager.page_size
+      }).catch(() => {
         this.loading = false
       })
     },
@@ -172,6 +178,28 @@ export default {
       this.dialogVisible = true
       this.command = task.command
       this.result = task.result
+    },
+
+    reload () {
+      this.taskLogList()
+    },
+
+    clearLogs () {
+      const $this = this
+      this.$confirm({
+        okType: 'danger',
+        title: '确定清空任务日志',
+        content: '清空后日志将无法恢复，请确认后谨慎操作',
+        onOk () {
+          $this.loading = true
+          clearLogList($this.taskId).then(() => {
+            $this.loading = false
+            $this.taskLogList()
+          }).catch(() => {
+            $this.loading = false
+          })
+        }
+      })
     }
   }
 }
