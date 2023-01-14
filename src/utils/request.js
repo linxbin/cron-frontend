@@ -36,7 +36,7 @@ const errorHandler = (error) => {
     } else if (error.response.status === 404) {
       notification.error({
         message: 'Not Found',
-        description: '请求服务器资源不存在'
+        description: data.message
       })
     } else {
       notification.error({
