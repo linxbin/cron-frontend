@@ -56,7 +56,8 @@
             name="timeout"
             v-decorator="[
               'timeout',
-              {rules: [{ required: false }]}
+              {initialValue: 0},
+              {rules: [{ required: true }]}
             ]"
           />
           <span> 秒</span>
@@ -72,7 +73,8 @@
             name="retryTimes"
             v-decorator="[
               'retryTimes',
-              {rules: [{ required: false }]}
+              {initialValue: 0},
+              {rules: [{ required: true }]}
             ]"
           />
           <span> 次</span>
@@ -90,7 +92,8 @@
             name="retryInterval"
             v-decorator="[
               'retryInterval',
-              {rules: [{ required: false }]}
+              {initialValue: 0},
+              {rules: [{ required: true }]},
             ]"
           />
           <span> 秒</span>

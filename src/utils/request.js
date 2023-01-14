@@ -33,6 +33,7 @@ const errorHandler = (error) => {
         store.commit('SET_ROLES', [])
         storage.remove(ACCESS_TOKEN)
       }
+      location.reload()
     } else if (error.response.status === 404) {
       notification.error({
         message: 'Not Found',
