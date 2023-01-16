@@ -141,10 +141,7 @@ export default {
       this.form.validateFields((err, values) => {
         values.id = this.task.id
         if (!err) {
-          editTask(values).then((res) => {
-            this.$notification.success({
-              message: res.message
-            })
+          editTask(values).then(() => {
             this.goList()
           })
         }
