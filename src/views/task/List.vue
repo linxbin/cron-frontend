@@ -180,20 +180,26 @@ export default {
         id: record.id
       }
       if (record.is_enable) {
-        disableTask(params)
+        this.handleDisableTask(params)
       } else {
-        enableTask(params)
+        this.handleEnableTask(params)
       }
-      setTimeout(() => {
-        this.taskList()
-      }, 300)
     },
-
+    handleDisableTask (params) {
+      disableTask(params).then((res) => {
+        this.taskList()
+      })
+    },
+    handleEnableTask (params) {
+      enableTask(params).then((res) => {
+        this.taskList()
+      })
+    },
     handleDelete (record) {
       const params = {
         id: record.id
       }
-      deleteTask(params).then(() => {
+      deleteTask(params).then((res) => {
         this.taskList()
       })
     },

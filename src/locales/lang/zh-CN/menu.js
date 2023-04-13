@@ -41,8 +41,10 @@ export default {
   'menu.task.list': '任务列表',
   'menu.task.add': '新增任务',
   'menu.task.edit': '编辑任务',
-
   'menu.task-log': '任务日志',
   'menu.task-log.list': '任务日志列表',
-  'menu.task-log.detail': '任务日志详情'
+  'menu.task-log.detail': '任务日志详情',
+  'menu.user': '用户管理',
+  'menu.user.list': '用户列表',
+  'menu.user.add': '新增用户'
 }

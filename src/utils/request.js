@@ -1,9 +1,9 @@
 import axios from 'axios'
 import store from '@/store'
 import storage from 'store'
-import notification from 'ant-design-vue/es/notification'
 import { VueAxios } from './axios'
 import { ACCESS_TOKEN, AUTHORIZATION } from '@/store/mutation-types'
+import { message } from 'ant-design-vue'
 
 // 创建 axios 实例
 const request = axios.create({
@@ -18,33 +18,15 @@ const errorHandler = (error) => {
     const data = error.response.data
     // 从 localstorage 获取 token
     const token = storage.get(ACCESS_TOKEN)
-    if (error.response.status === 403) {
-      notification.error({
-        message: 'Forbidden',
-        description: data.message
-      })
-    } else if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
-      notification.error({
-        message: 'Unauthorized',
-        description: data.message
-      })
+    if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
       if (token) {
         store.commit('SET_TOKEN', '')
         store.commit('SET_ROLES', [])
         storage.remove(ACCESS_TOKEN)
       }
       location.reload()
-    } else if (error.response.status === 404) {
-      notification.error({
-        message: 'Not Found',
-        description: data.message
-      })
-    } else {
-      notification.error({
-        message: 'Error',
-        description: data.message ? data.message : '网络请求异常'
-      })
     }
+    message.error(data.message)
   }
   return Promise.reject(error)
 }
@@ -62,6 +44,9 @@ request.interceptors.request.use(config => {
 
 // response interceptor
 request.interceptors.response.use((response) => {
+  if (response.request.custom.method === 'POST') {
+    message.success(response.data.message)
+  }
   return response.data
 }, errorHandler)
 

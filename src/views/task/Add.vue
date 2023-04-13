@@ -49,14 +49,14 @@
           label="超时时间"
           :labelCol="{lg: {span: 7}, sm: {span: 7}}"
           :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
-          help="0 不设置任务执行超时时间"
+          help="最少不能小于 1 秒"
         >
           <a-input-number
-            :min="0"
+            :min="1"
             name="timeout"
             v-decorator="[
               'timeout',
-              {initialValue: 0},
+              {initialValue: 30},
               {rules: [{ required: true }]}
             ]"
           />
@@ -138,7 +138,7 @@ export default {
       e.preventDefault()
       this.form.validateFields((err, values) => {
         if (!err) {
-          addTask(values).then(() => {
+          addTask(values).then((res) => {
             this.goList()
           })
         }

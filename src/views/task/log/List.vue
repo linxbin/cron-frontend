@@ -47,9 +47,11 @@
           </a-button>
         </template>
         <div>
+          <label>执行命令</label>
           <pre>{{ this.command }}</pre>
         </div>
         <div>
+          <label>执行结果</label>
           <pre>{{ this.result }}</pre>
         </div>
       </a-modal>
@@ -204,3 +206,12 @@ export default {
   }
 }
 </script>
+<style scoped>
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding:10px;
+  background-color: #4C4C4C;
+  color: white;
+}
+</style>
